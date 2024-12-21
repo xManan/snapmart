@@ -37,6 +37,7 @@ func main() {
             c.String(200, err.Error())
             return
         }
+        var categoryIds []int64
         categoryProductMap := make(map[int64]*types.CategoryWithProducts)
         for _, product := range products {
             category, ok := categoryProductMap[product.CategoryID]
@@ -49,6 +50,7 @@ func main() {
                     },
                 }
                 categoryProductMap[product.CategoryID] = category
+                categoryIds = append(categoryIds, category.CategoryID)
             }
             if product.ProductID.Valid {
                 attrJson := make(map[string]interface{})
@@ -72,10 +74,7 @@ func main() {
                 category.Products = append(category.Products, prd)
             }
         }
-        // jsonStr, _ := json.Marshal(categoryProductMap[2].Products[0])
-        // c.String(200, string(jsonStr))
-        // return
-        templComp := components.Index(categoryProductMap)
+        templComp := components.Index(categoryProductMap, categoryIds)
         templComp.Render(c.Request.Context(), c.Writer)
     })
 

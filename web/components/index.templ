@@ -2,7 +2,7 @@ package components
 
 import "snapmart/types"
 
-templ Index(categories map[int64]*types.CategoryWithProducts) {
+templ Index(categories map[int64]*types.CategoryWithProducts, categoryIds []int64) {
 	<!DOCTYPE html>
 	<html lang="en">
 	
@@ -46,13 +46,13 @@ templ Index(categories map[int64]*types.CategoryWithProducts) {
         </div>
         <div class="mt-4 w-3/4 mx-auto max-w-[96rem]">
             <div id="categories" class="flex justify-between mb-2">
-                for _, category := range categories {
-                    @CategoryItem(category.CategoryName, "/static" + category.CategoryImgPath)
+                for _, id := range categoryIds {
+                    @CategoryItem(categories[id].CategoryName, "/static" + categories[id].CategoryImgPath)
                 }
             </div>
             <div id="category-products-container" class="flex flex-col">
-                for _, category := range categories {
-                    @CategoryProductsContainer(category.CategoryName, category.Products)
+                for _, id := range categoryIds {
+                    @CategoryProductsContainer(categories[id].CategoryName, categories[id].Products)
                 }
                 <div class="flex items-center mx-auto">
                     <h1 class="text-2xl font-bold mr-2">Category</h1>
