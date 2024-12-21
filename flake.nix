@@ -18,6 +18,9 @@
 					pkgs.go
 					pkgs.gopls
 					pkgs.templ
+					pkgs.air
+					pkgs.sqlc
+					pkgs.go-migrate
 				];
 			};
 

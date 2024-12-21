@@ -1,22 +1,42 @@
 package main
 
 import (
-	"fmt"
-	"net/http"
+	_ "fmt"
+	_ "net/http"
 
-	"github.com/a-h/templ"
+	_ "github.com/a-h/templ"
 	"snapmart/web/components"
+    "github.com/gin-gonic/gin"
+    _ "github.com/mattn/go-sqlite3"
+    "log"
+    "database/sql"
+    "context"
+    "snapmart/db"
+    _ "reflect"
+    _ "embed"
 
 )
+
 func main() {
-	fs := http.FileServer(http.Dir("./web/static"))
+	ctx := context.Background()
 
-	http.Handle("/static/", http.StripPrefix("/static/", fs))
+	conn, err := sql.Open("sqlite3", "./snapmart.sqlite")
+	if err != nil {
+        log.Fatal(err)
+	}
 
-	component := components.Index()
-	
-	http.Handle("/", templ.Handler(component))
+	queries := db.New(conn)
+    router := gin.Default()
+    router.Static("/static", "./web/static")
+    router.GET("/", func(c *gin.Context) {
+        c.Status(200)
+        categories, err := queries.ListCategories(ctx)
+        if err != nil {
+            c.String(200, err.Error())
+        }
+        templComp := components.Index(categories)
+        templComp.Render(c.Request.Context(), c.Writer)
+    })
 
-	fmt.Println("Listening on :3000")
-	http.ListenAndServe(":3000", nil)
+    router.Run(":3000")
 }
