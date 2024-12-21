@@ -1,12 +1,26 @@
 package components
 
-templ ProductCard() {
-    <div class="w-[13.5rem] border rounded-lg px-4 py-4 shadow-lg">
-        <img src="/static/imgs/products/milk.jpg" class="mx-auto"/>
-        <div class="text-lg font-bold">Amul Gold Full Cream Fresh Milk</div>
-        <div class="text-gray-500">100 ml</div>
+import (
+    "snapmart/types"
+    "fmt"
+)
+
+templ ProductCard(product types.Product) {
+    <div class="w-[13.5rem] border rounded-lg px-4 py-4 shadow-lg flex flex-col">
+        <img src={ "/static" + product.ProductImgPath } class="mx-auto"/>
+        <div class="text-lg font-bold">{ product.ProductName }</div>
+        <div class="text-gray-500 mt-auto">{ product.ProductAttributesJson["magnitude"].(string) + " " + product.ProductAttributesJson["unit"].(string) }</div>
         <div class="flex justify-between items-center">
-            <div class="font-bold">Rs. 34</div>
+            {{ 
+                price := float64(product.ProductPrice) / 100
+                priceStr := ""
+                if price == float64(int64(price)) { 
+                    priceStr = fmt.Sprintf("%g", price) 
+                } else {
+                    priceStr = fmt.Sprintf("%.2f", price) 
+                }
+            }}
+            <div class="font-bold">Rs. { priceStr }</div>
             <button class="border border-[#2C7865] text-[#2C7865] bg-green-100 px-4 py-2 font-bold rounded-lg">ADD</button>
         </div>
     </div>

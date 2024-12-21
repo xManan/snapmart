@@ -1,8 +1,8 @@
 package components
 
-import "snapmart/db"
+import "snapmart/types"
 
-templ Index(categories []db.Category) {
+templ Index(categories map[int64]*types.CategoryWithProducts) {
 	<!DOCTYPE html>
 	<html lang="en">
 	
@@ -23,35 +23,37 @@ templ Index(categories []db.Category) {
 
     </style>
 	<body>
-        <div class="flex justify-around items-center py-6 px-4 text-xl shadow-md sticky top-0 bg-white">
-            <a class="font-bold text-4xl">
-                <span class="text-[#FF9800]">snap</span><span class="text-[#2C7865]">mart</span>
-            </a>
-            <div>
-                <div class="font-bold">Delivering in 15 mins</div>
-                <div>Choose a location</div>
+        <div class="py-6 px-4 text-xl shadow-md sticky top-0 bg-white">
+            <div class="flex justify-around items-center mx-auto max-w-[132rem]">
+                <a class="font-bold text-4xl">
+                    <span class="text-[#FF9800]">snap</span><span class="text-[#2C7865]">mart</span>
+                </a>
+                <div>
+                    <div class="font-bold">Delivering in 15 mins</div>
+                    <div>Choose a location</div>
+                </div>
+                <div class="w-[70rem] px-4 py-3 rounded-lg border bg-gray-100">
+                    <!-- <input type="text" class="w-full" /> -->
+                    <span>search</span>
+                </div>
+                <a class="text-2xl">
+                    Login
+                </a>
+                <a class="bg-[#2C7865] text-white font-bold py-3 px-6 rounded-lg text-2xl">
+                    Cart
+                </a>
             </div>
-            <div class="w-[70rem] px-4 py-3 rounded-lg border bg-gray-100">
-                <!-- <input type="text" class="w-full" /> -->
-                <span>search</span>
-            </div>
-            <a class="text-2xl">
-                Login
-            </a>
-            <a class="bg-[#2C7865] text-white font-bold py-3 px-6 rounded-lg text-2xl">
-                Cart
-            </a>
         </div>
-        <div class="mt-4 w-3/4 mx-auto">
+        <div class="mt-4 w-3/4 mx-auto max-w-[96rem]">
             <div id="categories" class="flex justify-between mb-2">
                 for _, category := range categories {
                     @CategoryItem(category.CategoryName, "/static" + category.CategoryImgPath)
                 }
             </div>
             <div id="category-products-container" class="flex flex-col">
-                @CategoryProductsContainer("Dairy, Bread & Eggs")
-                @CategoryProductsContainer("Fruits & Vegetables")
-                @CategoryProductsContainer("Fruits & Vegetables")
+                for _, category := range categories {
+                    @CategoryProductsContainer(category.CategoryName, category.Products)
+                }
                 <div class="flex items-center mx-auto">
                     <h1 class="text-2xl font-bold mr-2">Category</h1>
                     <span class="text-[#2C7865] text-xl">see all</span>

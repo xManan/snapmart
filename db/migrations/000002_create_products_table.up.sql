@@ -1,6 +1,7 @@
 CREATE TABLE products (
     product_id INTEGER PRIMARY KEY AUTOINCREMENT,
     product_name TEXT NOT NULL,
+    product_img_path TEXT NOT NULL,
     product_price INTEGER NOT NULL,
     product_category_id INTEGER NOT NULL,
     product_attributes TEXT,

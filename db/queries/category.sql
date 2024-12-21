@@ -8,4 +8,5 @@ ORDER BY category_name;
 
 -- name: ListCategoriesWithProducts :many
 SELECT * FROM categories
-LEFT JOIN products on product_category_id = category_id;
+LEFT JOIN products on product_category_id = category_id
+ORDER BY category_id, product_id;
