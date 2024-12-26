@@ -20,11 +20,27 @@ templ Index(categories map[int64]*types.CategoryWithProducts, categoryIds []int6
         body {
             font-family: 'Roboto', sans-serif;
         }
-
+        .inner-right-shadow {
+            box-shadow: inset -20px 0 22px -30px;
+        }
+        .inner-left-shadow {
+            box-shadow: inset 20px 0 22px -30px;
+        }
+        .inner-shadow {
+            box-shadow: inset 20px 0 22px -30px, inset -20px 0 22px -30px;
+        }
+        .hide-scrollbar {
+            /* For modern browsers */
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none; /* Internet Explorer 10+ */
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+          display: none; /* Safari and Chrome */
+        }
     </style>
 	<body>
-        <div class="py-6 px-4 text-xl shadow-md sticky top-0 bg-white">
-            <div class="flex justify-around items-center mx-auto max-w-[132rem]">
+        <div class="py-6 px-4 text-xl shadow-md sticky top-0 bg-white z-10">
+            <div class="flex justify-around items-center mx-auto max-w-[132rem] space-x-8">
                 <a class="font-bold text-4xl">
                     <span class="text-[#FF9800]">snap</span><span class="text-[#2C7865]">mart</span>
                 </a>
@@ -32,7 +48,7 @@ templ Index(categories map[int64]*types.CategoryWithProducts, categoryIds []int6
                     <div class="font-bold">Delivering in 15 mins</div>
                     <div>Choose a location</div>
                 </div>
-                <div class="w-[70rem] px-4 py-3 rounded-lg border bg-gray-100">
+                <div class="flex-grow  px-4 py-3 rounded-lg border bg-gray-100">
                     <!-- <input type="text" class="w-full" /> -->
                     <span>search</span>
                 </div>
@@ -45,14 +61,14 @@ templ Index(categories map[int64]*types.CategoryWithProducts, categoryIds []int6
             </div>
         </div>
         <div class="mt-4 w-3/4 mx-auto max-w-[96rem]">
-            <div id="categories" class="flex justify-between mb-2">
+            <div id="categories" class="flex justify-between mb-8">
                 for _, id := range categoryIds {
                     @CategoryItem(categories[id].CategoryName, "/static" + categories[id].CategoryImgPath)
                 }
             </div>
             <div id="category-products-container" class="flex flex-col">
                 for _, id := range categoryIds {
-                    @CategoryProductsContainer(categories[id].CategoryName, categories[id].Products)
+                    @CategoryProductsContainer(id, categories[id].CategoryName, categories[id].Products)
                 }
                 <div class="flex items-center mx-auto">
                     <h1 class="text-2xl font-bold mr-2">Category</h1>

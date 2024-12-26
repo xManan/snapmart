@@ -1,17 +1,97 @@
 package components
 
-import "snapmart/types"
+import (
+    "snapmart/types"
+    _ "strconv"
+)
 
-templ CategoryProductsContainer(category string, products []types.Product) {
-    <div class="my-8">
-        <div class="flex justify-between items-center mb-8">
+templ CategoryProductsContainer(id int64, category string, products []types.Product) {
+    <div class="mt-2 mb-4">
+        <div class="flex justify-between items-center mb-4">
             <h1 class="text-4xl font-bold">{category}</h1>
             <span class="text-[#2C7865] text-3xl hover:underline cursor-pointer">see all</span>
         </div>
-        <div class="flex justify-between">
-            for _, product := range products {
-                @ProductCard(product)
-            }
+        <div class="products-slider-container relative">
+            <button class="prev-btn absolute left-[-3rem] top-1/2 -translate-y-1/2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="green" viewBox="0 0 24 24">
+                  <path d="M15 4l-8 8 8 8" stroke="#2C7865" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+
+            </button>
+            <div class="products-container overflow-scroll hide-scrollbar py-6">
+                <div class="flex justify-between gap-4 ">
+                    for _, product := range products {
+                        @ProductCard(product)
+                    }
+                </div>
+            </div>
+            <button class="next-btn scroll-btn absolute right-[-3rem] top-1/2 -translate-y-1/2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="green" viewBox="0 0 24 24">
+                    <path d="M9 4l8 8-8 8" stroke="#2C7865" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
         </div>
+        <script>
+            (() => {
+                const script = document.currentScript
+                const productsContainer = script.closest('div').getElementsByClassName('products-container')[0]
+                const prevBtn = script.closest('div').getElementsByClassName('prev-btn')[0]
+                const nextBtn = script.closest('div').getElementsByClassName('next-btn')[0]
+                const scrollBy = 800
+                nextBtn.addEventListener('click', () => {
+                    productsContainer.scrollBy({
+                        left: +scrollBy,
+                        behavior: 'smooth',
+                    });                
+                })
+                prevBtn.addEventListener('click', () => {
+                    productsContainer.scrollBy({
+                        left: -scrollBy,
+                        behavior: 'smooth',
+                    });                
+                })
+                function setShadows(productsContainer, prevBtn, nextBtn) {
+                    console.log(productsContainer.scrollLeft)
+                    console.log(productsContainer.scrollLeftMax)
+                    if (productsContainer.scrollWidth > productsContainer.clientWidth) {
+                        productsContainer.classList.add('inner-right-shadow')
+                        if (productsContainer.scrollLeft == 0) {
+                        console.log('left')
+                            productsContainer.classList.add('inner-right-shadow')
+                            productsContainer.classList.remove('inner-shadow')
+                            productsContainer.classList.remove('inner-left-shadow')
+                            prevBtn.classList.add('hidden')
+                            nextBtn.classList.remove('hidden')
+                        } else if (productsContainer.scrollLeft == productsContainer.scrollLeftMax){
+                        console.log('right')
+                            productsContainer.classList.remove('inner-shadow')
+                            productsContainer.classList.remove('inner-right-shadow')
+                            productsContainer.classList.add('inner-left-shadow')
+                            prevBtn.classList.remove('hidden')
+                            nextBtn.classList.add('hidden')
+                        } else {
+                        console.log('mid')
+                            productsContainer.classList.add('inner-shadow')
+                            productsContainer.classList.remove('inner-left-shadow')
+                            productsContainer.classList.remove('inner-right-shadow')
+                            prevBtn.classList.remove('hidden')
+                            nextBtn.classList.remove('hidden')
+                        }
+                    } else {
+                        productsContainer.classList.remove('inner-right-shadow')
+                        productsContainer.classList.remove('inner-left-shadow')
+                        productsContainer.classList.remove('inner-shadow')
+                        prevBtn.classList.add('hidden')
+                        nextBtn.classList.add('hidden')
+                    }
+                }
+                productsContainer.addEventListener('scroll', () => setShadows(productsContainer, prevBtn, nextBtn))
+                function onResize(productsContainer, prevBtn, nextBtn) {
+                    setShadows(productsContainer, prevBtn, nextBtn)
+                }
+                window.addEventListener('resize', () => onResize(productsContainer, prevBtn, nextBtn))
+                setShadows(productsContainer, prevBtn, nextBtn)
+            })();
+        </script>
     </div>
 }
