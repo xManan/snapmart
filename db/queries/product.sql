@@ -1,4 +1,4 @@
--- name: ListProductsByCategory :many
+-- name: ListProductsWithCategory :many
 SELECT 
     products.*, 
     c1.category_id, 
@@ -14,3 +14,7 @@ ORDER BY CASE
     WHEN c1.category_parent_id IS NULL THEN c1.category_id
     ELSE c1.category_parent_id
 END;
+
+-- name: ListProductsByCategoryId :many
+SELECT * FROM products 
+WHERE product_category_id = ?;

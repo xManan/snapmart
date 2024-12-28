@@ -1,0 +1,14 @@
+package components
+import (
+    "snapmart/types"
+)
+templ ProductContainer(categoryName string, products []types.Product) {
+    <div>
+        <p class="mb-4 text-lg">Buy { categoryName } Online</p>
+        <div class="flex flex-wrap gap-4">
+            for _, product := range products {
+                @ProductCard(product)
+            }
+        </div>
+    </div>
+}

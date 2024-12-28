@@ -13,9 +13,9 @@ type IndexController struct {
     App *types.App
 }
 
-func(ic *IndexController) Index(c *gin.Context) {
+func(controller *IndexController) Index(c *gin.Context) {
     c.Status(200)
-    products, err := ic.App.Queries.ListProductsByCategory(c.Request.Context())
+    products, err := controller.App.Queries.ListProductsWithCategory(c.Request.Context())
     if err != nil {
         c.String(200, err.Error())
         return

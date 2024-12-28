@@ -2,14 +2,15 @@ package components
 
 import (
     "snapmart/types"
-    _ "strconv"
+    "strconv"
 )
 
 templ CategoryProductsContainer(id int64, category string, products []types.Product) {
     <div class="mt-2 mb-4">
         <div class="flex justify-between items-center mb-4">
             <h1 class="text-4xl font-bold">{category}</h1>
-            <span class="text-[#2C7865] text-3xl hover:underline cursor-pointer">see all</span>
+            {{ idStr := strconv.Itoa(int(id)) }}
+            <a href={templ.URL("/category/" + idStr )} class="text-[#2C7865] text-3xl hover:underline cursor-pointer">see all</a>
         </div>
         <div class="products-slider-container relative">
             <button class="prev-btn absolute left-[-3rem] top-1/2 -translate-y-1/2">
@@ -51,26 +52,21 @@ templ CategoryProductsContainer(id int64, category string, products []types.Prod
                     });                
                 })
                 function setShadows(productsContainer, prevBtn, nextBtn) {
-                    console.log(productsContainer.scrollLeft)
-                    console.log(productsContainer.scrollLeftMax)
                     if (productsContainer.scrollWidth > productsContainer.clientWidth) {
                         productsContainer.classList.add('inner-right-shadow')
                         if (productsContainer.scrollLeft == 0) {
-                        console.log('left')
                             productsContainer.classList.add('inner-right-shadow')
                             productsContainer.classList.remove('inner-shadow')
                             productsContainer.classList.remove('inner-left-shadow')
                             prevBtn.classList.add('hidden')
                             nextBtn.classList.remove('hidden')
                         } else if (productsContainer.scrollLeft == productsContainer.scrollLeftMax){
-                        console.log('right')
                             productsContainer.classList.remove('inner-shadow')
                             productsContainer.classList.remove('inner-right-shadow')
                             productsContainer.classList.add('inner-left-shadow')
                             prevBtn.classList.remove('hidden')
                             nextBtn.classList.add('hidden')
                         } else {
-                        console.log('mid')
                             productsContainer.classList.add('inner-shadow')
                             productsContainer.classList.remove('inner-left-shadow')
                             productsContainer.classList.remove('inner-right-shadow')

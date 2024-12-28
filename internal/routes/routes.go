@@ -6,9 +6,14 @@ import (
 )
 
 func Init(app *types.App) {
-    ic := controllers.IndexController{ App: app }
+    indexController := controllers.IndexController{ App: app }
+    categoryController := controllers.CategoryController{ App: app }
+    productController := controllers.ProductController{ App: app }
 
     app.Router.Static("/static", "./web/static")
 
-    app.Router.GET("/", ic.Index)
+    app.Router.GET("/", indexController.Index)
+    app.Router.GET("/category/:categoryId", categoryController.CategoryPage)
+    app.Router.GET("/category/:categoryId/:subcategoryId", categoryController.CategoryPage)
+    app.Router.GET("/category/:categoryId/products", productController.ProductContainer)
 }

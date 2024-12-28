@@ -2,4 +2,6 @@
 tmp
 *.sqlite
 storage
-db/*.go
+db/db.go
+db/models.go
+db/*.sql.go

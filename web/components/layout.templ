@@ -1,0 +1,70 @@
+package components
+
+templ Layout() {
+	<!DOCTYPE html>
+	<html lang="en">
+	
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>snapmart</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script src="https://unpkg.com/htmx.org@2.0.4"></script>
+	</head>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+        .inner-right-shadow {
+            box-shadow: inset -20px 0 22px -30px;
+        }
+        .inner-left-shadow {
+            box-shadow: inset 20px 0 22px -30px;
+        }
+        .inner-shadow {
+            box-shadow: inset 20px 0 22px -30px, inset -20px 0 22px -30px;
+        }
+        .hide-scrollbar {
+            /* For modern browsers */
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none; /* Internet Explorer 10+ */
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+          display: none; /* Safari and Chrome */
+        }
+    </style>
+	<body>
+        <div class="py-6 px-4 text-xl shadow-md sticky top-0 bg-white z-10">
+            <div class="flex justify-around items-center mx-auto max-w-[132rem] space-x-8">
+                <a href="/" class="font-bold text-4xl">
+                    <span class="text-[#FF9800]">snap</span><span class="text-[#2C7865]">mart</span>
+                </a>
+                <div>
+                    <div class="font-bold">Delivering in 15 mins</div>
+                    <div>Choose a location</div>
+                </div>
+                <div class="flex-grow  px-4 py-3 rounded-lg border bg-gray-100">
+                    <!-- <input type="text" class="w-full" /> -->
+                    <span>search</span>
+                </div>
+                <a class="text-2xl">
+                    Login
+                </a>
+                <a class="bg-[#2C7865] text-white font-bold py-3 px-6 rounded-lg text-2xl">
+                    Cart
+                </a>
+            </div>
+        </div>
+        <div class="mt-4 w-3/4 mx-auto max-w-[96rem]">
+            { children... }
+        </div>
+        <div>
+            <br />
+        </div>
+	</body>
+	</html>
+}

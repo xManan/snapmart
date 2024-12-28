@@ -1,0 +1,39 @@
+package components
+
+import (
+    "snapmart/db"
+    "strconv"
+    "fmt"
+)
+
+templ SubcategorySidenavBtn(subCategory db.Category, selected bool) {
+    <div 
+        role="tab"
+        aria-controls="tab-contents"
+        aria-selected={ strconv.FormatBool(selected) }
+        hx-get={ "/category/" + strconv.Itoa(int(subCategory.CategoryID)) + "/products" }
+        hx-swap="innerHTML"
+        hx-target="#products-container"
+        hx-on-htmx-before-request={ fmt.Sprintf(`
+            let selected = document.querySelector('.subcategory-sidenav[aria-selected=true]')
+            selected.setAttribute('aria-selected', 'false')
+            selected.classList.remove('bg-green-100')
+            selected.classList.remove('pointer-events-none')
+            let selectedLeftBar = selected.querySelector('.left-bar')
+            selectedLeftBar.classList.remove('bg-[#2C7865]')
+
+            this.setAttribute('aria-selected', 'true')
+            this.classList.add('bg-green-100')
+            this.classList.add('pointer-events-none')
+            let thisLeftBar = this.querySelector('.left-bar')
+            thisLeftBar.classList.add('bg-[#2C7865]')
+
+            history.replaceState(null, null, '/category/%d/%d')
+        `, subCategory.CategoryParentID.Int64, subCategory.CategoryID) }
+        class={ "subcategory-sidenav", "flex hover:bg-green-100 mr-4 border-b border-grey-200 cursor-pointer", templ.KV("bg-green-100", selected), templ.KV("pointer-events-none", selected) }
+    >
+        <div class={ "left-bar", "w-1", templ.KV("bg-[#2C7865]", selected) }></div>
+        <p class="whitespace-nowrap py-2 pl-4 pr-16">{ subCategory.CategoryName }</p>
+        <hr/>
+    </div>
+}

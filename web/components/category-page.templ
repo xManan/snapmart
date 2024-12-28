@@ -1,0 +1,23 @@
+package components
+
+import (
+    "snapmart/db"
+    "snapmart/types"
+)
+
+templ CategoryPage(category db.Category, subCategories []db.Category, products []types.Product) {
+    @Layout() {
+        <div class="flex">
+            if len(subCategories) > 0 {
+                <div class="flex flex-col">
+                    for _, subCategory := range subCategories {
+                        @SubcategorySidenavBtn(subCategory, category.CategoryID == subCategory.CategoryID)
+                    }
+                </div>
+            }
+            <div id="products-container">
+                @ProductContainer(category.CategoryName, products)
+            </div>
+        </div>
+    }
+}

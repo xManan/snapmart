@@ -6,9 +6,11 @@ import (
 )
 
 templ ProductCard(product types.Product) {
-    <div class="min-w-[13.5rem] border rounded-lg px-4 py-4 shadow-lg flex flex-col" style="z-index: -1;">
-        <img src={ "/static" + product.ProductImgPath } class="mx-auto" style="z-index: -2;"/>
-        <div class="text-lg font-bold">{ product.ProductName }</div>
+    <div class="min-w-[13.5rem] grow border rounded-lg px-4 py-4 shadow-lg flex flex-col relative" style="z-index: -1;">
+        <a href="/">
+            <img src={ "/static" + product.ProductImgPath } class="mx-auto"/>
+            <div class="text-lg font-bold">{ product.ProductName }</div>
+        </a>
         <div class="text-gray-500 mt-auto">{ product.ProductAttributesJson["magnitude"].(string) + " " + product.ProductAttributesJson["unit"].(string) }</div>
         <div class="flex justify-between items-center">
             {{ 

@@ -1,8 +1,13 @@
 package components
 
-templ CategoryItem(category, img string) {
-    <div class="w-40 text-center font-bold cursor-pointer hover:underline">
-        <img src={img} class="w-40 aspect-square" />
-        <span class="">{category}</span>
-    </div>
+import (
+    "strconv"
+)
+
+templ CategoryItem(id int64, category, imgPath string) {
+    {{ idStr := strconv.Itoa(int(id)) }}
+    <a href={ templ.URL("/category/" + idStr) } class="w-40 text-center font-bold cursor-pointer">
+        <img src={imgPath} class="w-40 aspect-square" />
+        <span class="hover:underline">{category}</span>
+    </a>
 }
