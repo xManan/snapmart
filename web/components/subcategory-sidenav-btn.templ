@@ -14,6 +14,7 @@ templ SubcategorySidenavBtn(subCategory db.Category, selected bool) {
         hx-get={ "/category/" + strconv.Itoa(int(subCategory.CategoryID)) + "/products" }
         hx-swap="innerHTML"
         hx-target="#products-container"
+        hx-indicator="#loader"
         hx-on-htmx-before-request={ fmt.Sprintf(`
             let selected = document.querySelector('.subcategory-sidenav[aria-selected=true]')
             selected.setAttribute('aria-selected', 'false')
@@ -27,6 +28,8 @@ templ SubcategorySidenavBtn(subCategory db.Category, selected bool) {
             this.classList.add('pointer-events-none')
             let thisLeftBar = this.querySelector('.left-bar')
             thisLeftBar.classList.add('bg-[#2C7865]')
+
+            document.getElementById("product-card-container").innerHTML = ""
 
             history.replaceState(null, null, '/category/%d/%d')
         `, subCategory.CategoryParentID.Int64, subCategory.CategoryID) }

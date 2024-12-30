@@ -15,7 +15,7 @@ templ CategoryPage(category db.Category, subCategories []db.Category, products [
                     }
                 </div>
             }
-            <div id="products-container">
+            <div id="products-container" class="w-full">
                 @ProductContainer(category.CategoryName, products)
             </div>
         </div>

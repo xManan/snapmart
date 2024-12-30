@@ -51,42 +51,26 @@ templ CategoryProductsContainer(id int64, category string, products []types.Prod
                         behavior: 'smooth',
                     });                
                 })
-                function setShadows(productsContainer, prevBtn, nextBtn) {
+                function setNPBtns(productsContainer, prevBtn, nextBtn) {
                     if (productsContainer.scrollWidth > productsContainer.clientWidth) {
-                        productsContainer.classList.add('inner-right-shadow')
                         if (productsContainer.scrollLeft == 0) {
-                            productsContainer.classList.add('inner-right-shadow')
-                            productsContainer.classList.remove('inner-shadow')
-                            productsContainer.classList.remove('inner-left-shadow')
                             prevBtn.classList.add('hidden')
                             nextBtn.classList.remove('hidden')
                         } else if (productsContainer.scrollLeft == productsContainer.scrollLeftMax){
-                            productsContainer.classList.remove('inner-shadow')
-                            productsContainer.classList.remove('inner-right-shadow')
-                            productsContainer.classList.add('inner-left-shadow')
                             prevBtn.classList.remove('hidden')
                             nextBtn.classList.add('hidden')
                         } else {
-                            productsContainer.classList.add('inner-shadow')
-                            productsContainer.classList.remove('inner-left-shadow')
-                            productsContainer.classList.remove('inner-right-shadow')
                             prevBtn.classList.remove('hidden')
                             nextBtn.classList.remove('hidden')
                         }
                     } else {
-                        productsContainer.classList.remove('inner-right-shadow')
-                        productsContainer.classList.remove('inner-left-shadow')
-                        productsContainer.classList.remove('inner-shadow')
                         prevBtn.classList.add('hidden')
                         nextBtn.classList.add('hidden')
                     }
                 }
-                productsContainer.addEventListener('scroll', () => setShadows(productsContainer, prevBtn, nextBtn))
-                function onResize(productsContainer, prevBtn, nextBtn) {
-                    setShadows(productsContainer, prevBtn, nextBtn)
-                }
-                window.addEventListener('resize', () => onResize(productsContainer, prevBtn, nextBtn))
-                setShadows(productsContainer, prevBtn, nextBtn)
+                productsContainer.addEventListener('scroll', () => setNPBtns(productsContainer, prevBtn, nextBtn))
+                window.addEventListener('resize', () => setNPBtns(productsContainer, prevBtn, nextBtn))
+                setNPBtns(productsContainer, prevBtn, nextBtn)
             })();
         </script>
     </div>

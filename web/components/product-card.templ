@@ -6,7 +6,7 @@ import (
 )
 
 templ ProductCard(product types.Product) {
-    <div class="min-w-[13.5rem] grow border rounded-lg px-4 py-4 shadow-lg flex flex-col relative" style="z-index: -1;">
+    <div class="min-w-[13.5rem] border rounded-lg px-4 py-4 shadow-lg flex flex-col">
         <a href="/">
             <img src={ "/static" + product.ProductImgPath } class="mx-auto"/>
             <div class="text-lg font-bold">{ product.ProductName }</div>
