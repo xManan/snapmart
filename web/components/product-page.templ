@@ -1,0 +1,53 @@
+package components
+
+import (
+    "snapmart/types"
+    "fmt"
+)
+
+templ ProductPage(product types.Product) {
+    @Layout() {
+        <section class="container mx-auto px-4 py-8">
+            <div class="flex flex-col md:flex-row items-center space-x-8">
+
+                <!-- Product Image -->
+                <div class="w-full md:w-1/2">
+                    <img src="https://via.placeholder.com/400x400" alt="Fresh Bread" class="w-full h-auto rounded-lg shadow-lg">
+                </div>
+
+                <!-- Product Info --> <div class="w-full md:w-1/2 mt-8 md:mt-0">
+                    <h2 class="text-4xl font-bold">{ product.ProductName }</h2>
+                    <p class="text-lg text-gray-600 mt-4">Freshly baked white bread, soft and fluffy. Perfect for sandwiches or as a side to any meal.</p>
+
+                    <!-- Price -->
+                    {{ 
+                        price := float64(product.ProductPrice) / 100
+                        priceStr := ""
+                        if price == float64(int64(price)) { 
+                            priceStr = fmt.Sprintf("%g", price) 
+                        } else {
+                            priceStr = fmt.Sprintf("%.2f", price) 
+                        }
+                    }}
+                    <p class="text-3xl font-bold mt-6">Rs. { priceStr }</p>
+
+                    <!-- Add to Cart Section -->
+                    <div class="flex items-center mt-6 space-x-4">
+                        @AddToCartBtn()
+                    </div>
+
+                    <!-- Product Details -->
+                    <div class="mt-8">
+                        <h3 class="text-2xl font-semibold">Product Details</h3>
+                        <ul class="list-disc pl-6 mt-4 text-gray-600">
+                            <li>Net Weight: 500g</li>
+                            <li>Ingredients: Wheat Flour, Water, Yeast, Sugar, Salt</li>
+                            <li>Storage: Store in a cool, dry place</li>
+                            <li>Expiration Date: 3 Days from Purchase</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    }
+}

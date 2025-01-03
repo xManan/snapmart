@@ -29,6 +29,24 @@ templ Layout() {
         }
     </style>
 	<body>
+        <div id="overlay-container" class="hidden fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 z-20 grid place-items-center">
+            <div id="login-container" class="overlays hidden z-30">
+                @Login()
+            </div>
+        </div>
+        <script>
+            let overlayContainer = document.getElementById('overlay-container')
+            overlayContainer.addEventListener('click', function(event) {
+                this.classList.add('hidden')
+                document.querySelectorAll('.overlays').forEach(overlay => {
+                    overlay.classList.add('hidden')
+                })
+            })
+            let loginContainer = document.getElementById('login-container')
+            loginContainer.addEventListener('click', event => {
+                event.stopPropagation()
+            })
+        </script>
         <div class="py-6 px-4 text-xl shadow-md sticky top-0 bg-white z-10">
             <div class="flex justify-around items-center mx-auto max-w-[132rem] space-x-8">
                 <a href="/" class="font-bold text-4xl">
@@ -42,9 +60,23 @@ templ Layout() {
                     <!-- <input type="text" class="w-full" /> -->
                     <span>search</span>
                 </div>
-                <a class="text-2xl">
+                <script>
+                    function handleShowLogin() {
+                        let overlayContainer = document.getElementById('overlay-container')
+                        overlayContainer.classList.remove('hidden')
+
+                        let overlays = document.querySelectorAll('.overlays')
+                        overlays.forEach(overlay => {
+                            overlay.classList.add('hidden')
+                        })
+
+                        let loginContainer = document.getElementById('login-container')
+                        loginContainer.classList.remove('hidden')
+                    }
+                </script>
+                <button onclick="handleShowLogin()" class="text-2xl">
                     Login
-                </a>
+                </button>
                 <a class="bg-[#2C7865] text-white font-bold py-3 px-6 rounded-lg text-2xl">
                     Cart
                 </a>
@@ -52,9 +84,6 @@ templ Layout() {
         </div>
         <div class="mt-4 w-3/4 mx-auto max-w-[96rem]">
             { children... }
-        </div>
-        <div>
-            <br />
         </div>
 	</body>
 	</html>

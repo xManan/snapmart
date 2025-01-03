@@ -48,3 +48,23 @@ func(controller *ProductController) ProductContainer(c *gin.Context) {
     templComp := components.ProductContainer(categoryName, prds)
     templComp.Render(ctx, c.Writer)
 }
+
+func(controller *ProductController) ProductPage(c *gin.Context) {
+    ctx := c.Request.Context()
+    productIdStr := c.Param("productId")
+    productId, err := strconv.Atoi(productIdStr)
+    if err != nil {
+        c.String(200, err.Error())
+        return
+    }
+    product, err := controller.App.Queries.GetProduct(ctx, int64(productId))
+    if err != nil {
+        c.String(200, err.Error())
+        return
+    }
+    attrJson := make(map[string]interface{})
+    err = json.Unmarshal([]byte(product.ProductAttributes.String), &attrJson)
+    prd := types.Product{product, attrJson}
+    productPage := components.ProductPage(prd)
+    productPage.Render(ctx, c.Writer)
+}

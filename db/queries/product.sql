@@ -18,3 +18,7 @@ END;
 -- name: ListProductsByCategoryId :many
 SELECT * FROM products 
 WHERE product_category_id = ?;
+
+-- name: GetProduct :one
+SELECT * FROM products 
+WHERE product_id = ? LIMIT 1;

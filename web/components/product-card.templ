@@ -3,11 +3,12 @@ package components
 import (
     "snapmart/types"
     "fmt"
+    "strconv"
 )
 
 templ ProductCard(product types.Product) {
     <div class="min-w-[13.5rem] border rounded-lg px-4 py-4 shadow-lg flex flex-col">
-        <a href="/">
+        <a href={ templ.SafeURL("/product/" + strconv.Itoa(int(product.ProductID))) }>
             <img src={ "/static" + product.ProductImgPath } class="mx-auto"/>
             <div class="text-lg font-bold">{ product.ProductName }</div>
         </a>
@@ -23,7 +24,7 @@ templ ProductCard(product types.Product) {
                 }
             }}
             <div class="font-bold">Rs. { priceStr }</div>
-            <button class="border border-[#2C7865] text-[#2C7865] bg-green-100 px-4 py-2 font-bold rounded-lg">ADD</button>
+            @AddToCartBtn()
         </div>
     </div>
 }
