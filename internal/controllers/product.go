@@ -21,17 +21,17 @@ func(controller *ProductController) ProductContainer(c *gin.Context) {
     categoryIdStr := c.Param("categoryId")
     categoryId, err := strconv.Atoi(categoryIdStr)
     if err != nil {
-        c.String(200, err.Error())
+        c.String(500, err.Error())
         return
     }
     categoryName, err := controller.App.Queries.GetCategoryName(ctx, int64(categoryId))
     if err != nil {
-        c.String(200, err.Error())
+        c.String(500, err.Error())
         return
     }
     products, err := controller.App.Queries.ListProductsByCategoryId(ctx, int64(categoryId))
     if err != nil {
-        c.String(200, err.Error())
+        c.String(500, err.Error())
         return
     }
     // TODO: use JSON_EXTRACT
@@ -40,7 +40,7 @@ func(controller *ProductController) ProductContainer(c *gin.Context) {
         attrJson := make(map[string]interface{})
         err := json.Unmarshal([]byte(product.ProductAttributes.String), &attrJson)
         if err != nil {
-            c.String(200, err.Error())
+            c.String(500, err.Error())
             return
         }
         prds = append(prds, types.Product{product, attrJson})
@@ -54,12 +54,12 @@ func(controller *ProductController) ProductPage(c *gin.Context) {
     productIdStr := c.Param("productId")
     productId, err := strconv.Atoi(productIdStr)
     if err != nil {
-        c.String(200, err.Error())
+        c.String(500, err.Error())
         return
     }
     product, err := controller.App.Queries.GetProduct(ctx, int64(productId))
     if err != nil {
-        c.String(200, err.Error())
+        c.String(500, err.Error())
         return
     }
     attrJson := make(map[string]interface{})

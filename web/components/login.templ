@@ -1,29 +1,37 @@
 package components
 
 templ Login() {
-    <div class="bg-white py-8 px-16 rounded-lg shadow-[0px_0px_10px_rgba(0,0,0,0.2)] w-full max-w-md relative">
-        <button id="login-close-btn" class="close-btn absolute right-4 top-4" aria-label="Close">
-            <svg fill="#000000" height="16px" width="16px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 490 490" xml:space="preserve">
-                <polygon points="456.851,0 245,212.564 33.149,0 0.708,32.337 212.669,245.004 0.708,457.678 33.149,490 245,277.443 456.851,490   489.292,457.678 277.331,245.004 489.292,32.337 "/>
-            </svg>
-        </button>
-        <script>
-            let loginCloseBtn = document.getElementById('login-close-btn')
-            loginCloseBtn.addEventListener('click', e => {
-                document.getElementById('overlay-container').classList.add('hidden')
-                document.getElementById('login-container').classList.add('hidden')
-            })
-        </script>
-        <h2 class="text-2xl font-semibold text-center text-gray-800 mb-6">Login or Sign up</h2>
-        <form id="phone-form">
-            <div class="mb-4">
-                <label for="phone" class="block text-sm font-medium text-gray-600">Enter your phone number</label>
-                <input type="text" id="phone" name="phone" placeholder="Enter phone number"
-                    class="w-full p-3 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#2C7865] focus:border-[#2C7865]" required>
-            </div>
-            <button type="submit" class="w-full bg-[#2C7865] text-white py-3 rounded-md hover:bg-[#2C7865] focus:outline-none focus:ring-2 focus:ring-[#2C7865]">
-                Send OTP
+    <div id="login-container" class="overlays hidden z-30">
+        <div class="bg-white py-8 px-16 rounded-lg shadow-[0px_0px_10px_rgba(0,0,0,0.2)] w-96 relative">
+            <button onclick="switchOverlay(null)" id="login-close-btn" class="close-btn absolute left-4 top-4" aria-label="Close">
+                <img class="w-4" src="/static/imgs/back-btn.svg" />
             </button>
-        </form>
+            <div hx-boost="true">
+                <h2 class="text-2xl font-semibold text-center text-gray-800 mb-2">Login or Sign Up</h2>
+                <form id="phone-form">
+                    <div class="mb-4">
+                        <input hx-validate="true" type="text" id="phone" name="phone" placeholder="Enter phone number"
+                            class="w-full p-3 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#2C7865] focus:border-[#2C7865]" required
+                        >
+                    </div>
+                    <button 
+                        type="submit" 
+                        class="relative w-full bg-[#2C7865] text-white py-3 rounded-md hover:bg-[#2C7865] focus:outline-none focus:ring-2 focus:ring-[#2C7865]"
+                        hx-post="/login"
+                        hx-swap="none"
+                        hx-indicator="#loader-white"
+                        hx-on-htmx-before-request="document.getElementById('send-otp-text').classList.add('invisible')"
+                        hx-on-htmx-after-request="switchOverlay('#otp-verify-container');document.getElementById('send-otp-text').classList.remove('invisible')"
+                    >
+                        <img 
+                            id="loader-white" 
+                            class="htmx-indicator w-8 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" 
+                            src="/static/imgs/loader-white.svg"
+                        />
+                        <span id="send-otp-text" class="">Send OTP</span>
+                    </button>
+                </form>
+            </div>
+        </div>
     </div>
 }

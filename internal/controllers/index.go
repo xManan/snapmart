@@ -17,7 +17,7 @@ func(controller *IndexController) Index(c *gin.Context) {
     c.Status(200)
     products, err := controller.App.Queries.ListProductsWithCategory(c.Request.Context())
     if err != nil {
-        c.String(200, err.Error())
+        c.String(500, err.Error())
         return
     }
     var categoryIds []int64
@@ -62,7 +62,7 @@ func(controller *IndexController) Index(c *gin.Context) {
             ProductAttributesJson: nil,
         }
         if err != nil {
-            c.String(200, err.Error())
+            c.String(500, err.Error())
             return
         }
         prd.ProductAttributesJson = attrJson

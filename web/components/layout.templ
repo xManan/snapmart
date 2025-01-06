@@ -30,9 +30,8 @@ templ Layout() {
     </style>
 	<body>
         <div id="overlay-container" class="hidden fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 z-20 grid place-items-center">
-            <div id="login-container" class="overlays hidden z-30">
-                @Login()
-            </div>
+            @Login()
+            @OtpVerify()
         </div>
         <script>
             let overlayContainer = document.getElementById('overlay-container')
@@ -42,10 +41,27 @@ templ Layout() {
                     overlay.classList.add('hidden')
                 })
             })
-            let loginContainer = document.getElementById('login-container')
-            loginContainer.addEventListener('click', event => {
-                event.stopPropagation()
+            document.querySelectorAll('.overlays').forEach(overlay => {
+                overlay.addEventListener('click', event => {
+                    event.stopPropagation()
+                })
             })
+            function switchOverlay(overlaySelector) {
+                document.querySelectorAll('.overlays').forEach(overlay => {
+                    overlay.classList.add('hidden')
+                })
+                if(!overlaySelector) {
+                    let overlayContainer = document.getElementById('overlay-container')
+                    overlayContainer.classList.add('hidden')
+                    return
+                }
+                let overlay = document.querySelector(overlaySelector)
+                if(!overlay) {
+                    return
+                }
+                overlay.classList.remove('hidden')
+
+            }
         </script>
         <div class="py-6 px-4 text-xl shadow-md sticky top-0 bg-white z-10">
             <div class="flex justify-around items-center mx-auto max-w-[132rem] space-x-8">

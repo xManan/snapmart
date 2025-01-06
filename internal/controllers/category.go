@@ -19,20 +19,20 @@ func (controller *CategoryController) CategoryPage(c *gin.Context) {
 	ctx := c.Request.Context()
 	idStr, err := strconv.Atoi(c.Param("categoryId"))
 	if err != nil {
-		c.String(200, err.Error())
+		c.String(500, err.Error())
 		return
 	}
 
 	id := int64(idStr)
 	category, err := controller.App.Queries.GetCategory(ctx, id)
 	if err != nil {
-		c.String(200, err.Error())
+		c.String(500, err.Error())
 		return
 	}
 	var subCategories []db.Category
 	subCategories, err = controller.App.Queries.ListSubcategories(ctx, sql.NullInt64{Int64: id, Valid: true})
 	if err != nil {
-		c.String(200, err.Error())
+		c.String(500, err.Error())
 		return
 	}
 	if len(subCategories) > 0 {
@@ -43,7 +43,7 @@ func (controller *CategoryController) CategoryPage(c *gin.Context) {
 		} else {
 			subId, err := strconv.Atoi(subIdStr)
 			if err != nil {
-				c.String(200, err.Error())
+				c.String(500, err.Error())
 				return
 			}
 			for _, subCategory := range subCategories {
@@ -57,7 +57,7 @@ func (controller *CategoryController) CategoryPage(c *gin.Context) {
 	}
 	products, err := controller.App.Queries.ListProductsByCategoryId(ctx, id)
 	if err != nil {
-		c.String(200, err.Error())
+		c.String(500, err.Error())
 		return
 	}
 	var productsWithJsonAttr []types.Product
@@ -65,7 +65,7 @@ func (controller *CategoryController) CategoryPage(c *gin.Context) {
 		parsedJson := make(map[string]interface{})
 		err = json.Unmarshal([]byte(product.ProductAttributes.String), &parsedJson)
 		if err != nil {
-			c.String(200, err.Error())
+			c.String(500, err.Error())
 			return
 		}
 		productsWithJsonAttr = append(productsWithJsonAttr, types.Product{product, parsedJson})

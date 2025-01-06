@@ -14,7 +14,8 @@ func Init(app *types.App) {
     app.Router.Static("/static", "./web/static")
 
     app.Router.GET("/", indexController.Index)
-    app.Router.GET("/login", authController.LoginPage)
+    app.Router.POST("/login", authController.Login)
+
     app.Router.GET("/category/:categoryId", categoryController.CategoryPage)
     app.Router.GET("/category/:categoryId/:subcategoryId", categoryController.CategoryPage)
     app.Router.GET("/category/:categoryId/products", productController.ProductContainer)
