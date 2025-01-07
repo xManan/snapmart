@@ -21,6 +21,9 @@
 					pkgs.air
 					pkgs.sqlc
 					pkgs.go-migrate
+
+                    pkgs.nodejs_22
+                    pkgs.typescript-language-server
 				];
 			};
 
