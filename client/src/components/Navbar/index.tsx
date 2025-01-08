@@ -2,7 +2,7 @@ import Logo from '@/components/Logo'
 
 function Navbar() {
     return (
-        <div className="sticky top-0 w-full flex flex-col md:flex-row gap-4 md:gap-8 justify-between items-center p-4 border-b">
+        <div className="sticky top-0 w-full bg-white flex flex-col md:flex-row gap-4 md:gap-8 justify-between items-center p-4 border-b z-10">
             <div className="text-4xl font-bold hidden md:block">
                 <Logo />
             </div>
