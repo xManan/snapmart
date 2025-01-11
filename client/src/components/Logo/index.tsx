@@ -1,7 +1,7 @@
 function Logo() {
     return (
         <p>
-            <span className="text-porange">snap</span><span className="text-pgreen">mart</span>
+            <span className="text-sm-orange">snap</span><span className="text-sm-green">mart</span>
         </p>
     )
 }

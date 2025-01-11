@@ -21,10 +21,10 @@ function Navbar() {
             <div className="hidden md:block">
                 Login
             </div>
-            <button className="bg-pgreen text-white rounded py-2 px-4 hidden md:block">
+            <button className="bg-sm-green text-white rounded py-2 px-4 hidden md:block">
                 Cart
             </button>
-            <div className="md:hidden fixed left-1/2 bottom-0 w-[95%] px-4 py-2 rounded-xl shadow-lg -translate-y-4 -translate-x-1/2 bg-pgreen text-white">
+            <div className="md:hidden fixed left-1/2 bottom-0 w-[95%] px-4 py-2 rounded-xl shadow-lg -translate-y-4 -translate-x-1/2 bg-sm-green text-white">
                 View Cart
             </div>
         </div>

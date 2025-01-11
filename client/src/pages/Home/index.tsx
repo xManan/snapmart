@@ -1,8 +1,12 @@
+import CategorySection from '@/components/CategorySection'
+import SectionLabel from '@/components/SectionLabel'
+
 function Home() {
     return (
-        <h1 className="text-3xl font-bold underline">
-            Hello world!
-        </h1>
+        <>
+            <CategorySection />
+            <SectionLabel label="FEATURED" />
+        </>
     )
 }
 

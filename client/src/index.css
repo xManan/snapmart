@@ -4,8 +4,10 @@
 
 @layer base {
   :root {
-    --primary-green: #2C7865;
-    --primary-orange: #FF9800;
+    --green: #2C7865;
+    --orange: #FF9800;
+    --light-green: #90D26D;
+    --cream-green: #D9EDBF;
   }
 
   body {

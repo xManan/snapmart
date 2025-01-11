@@ -10,8 +10,10 @@ export default {
             borderRadius: {
             },
             colors: {
-                pgreen: 'var(--primary-green)',
-                porange: 'var(--primary-orange)',
+                'sm-green': 'var(--green)',
+                'sm-orange': 'var(--orange)',
+                'sm-light-green': 'var(--light-green)',
+                'sm-cream-green': 'var(--cream-green)',
             },
             fontFamily: {
                 sans: ['Roboto', 'ui-sans-serif', 'system-ui'],
