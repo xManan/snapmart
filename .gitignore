@@ -1,7 +1,0 @@
-*_templ.go
-tmp
-*.sqlite
-storage
-db/db.go
-db/models.go
-db/*.sql.go

@@ -1,24 +1,20 @@
 package routes
 
 import (
-    "snapmart/types"
-    "snapmart/internal/controllers"
+	"github.com/xManan/snapmart/server/internal/controllers"
+	"github.com/xManan/snapmart/server/internal/types"
 )
 
 func Init(app *types.App) {
-    indexController := controllers.IndexController{ App: app }
-    categoryController := controllers.CategoryController{ App: app }
-    productController := controllers.ProductController{ App: app }
-    authController := controllers.AuthController{ App: app }
+    r := app.Router
 
-    app.Router.Static("/static", "./web/static")
-
-    app.Router.GET("/", indexController.Index)
-    app.Router.POST("/login", authController.Login)
-
-    app.Router.GET("/category/:categoryId", categoryController.CategoryPage)
-    app.Router.GET("/category/:categoryId/:subcategoryId", categoryController.CategoryPage)
-    app.Router.GET("/category/:categoryId/products", productController.ProductContainer)
-
-    app.Router.GET("/product/:productId", productController.ProductPage)
+    indexController := controllers.NewIndexController(app)
+    
+    api := r.Group("/api")
+    {
+        v1 := api.Group("/v1")
+        {
+            v1.GET("/test", indexController.TestApi)
+        }
+    }
 }
