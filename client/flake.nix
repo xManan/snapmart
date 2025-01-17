@@ -1,5 +1,5 @@
 {
-	description = "Go 1.22";
+	description = "NodeJS";
 
 	inputs = {
 		nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
@@ -15,15 +15,8 @@
 			pkgs.mkShell
 			{
 				buildInputs = [
-					pkgs.go
-					pkgs.gopls
-					pkgs.templ
-					pkgs.air
-					pkgs.sqlc
-					pkgs.go-migrate
-
-                    pkgs.nodejs_22
-                    pkgs.typescript-language-server
+                    			pkgs.nodejs_22
+                    			pkgs.typescript-language-server
 				];
 			};
 
