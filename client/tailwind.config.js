@@ -1,9 +1,12 @@
+const flowbite = require("flowbite-react/tailwind");
+
 /** @type {import('tailwindcss').Config} */
 export default {
     darkMode: ["class"],
     content: [
         "./index.html",
         "./src/**/*.{js,ts,jsx,tsx}",
+        flowbite.content(),
     ],
     theme: {
         extend: {
@@ -18,7 +21,13 @@ export default {
             fontFamily: {
                 sans: ['Roboto', 'ui-sans-serif', 'system-ui'],
             },
+            animation: {
+                slide: 'slide 3s ease-in-out infinite',
+            },
         }
     },
-    plugins: [require("tailwindcss-animate")],
+    plugins: [
+        require("tailwindcss-animate"),
+        flowbite.plugin(),
+    ],
 }

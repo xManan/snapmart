@@ -1,11 +1,14 @@
 import Logo from '@/components/Logo'
+import { Link } from 'react-router-dom'
 
 function Navbar() {
     return (
         <div className="sticky top-0 w-full bg-white flex flex-col md:flex-row gap-4 md:gap-8 justify-between items-center p-4 border-b z-10">
-            <div className="text-4xl font-bold hidden md:block">
-                <Logo />
-            </div>
+            <Link to="/">
+                <div className="text-4xl font-bold hidden md:block">
+                    <Logo />
+                </div>
+            </Link>
             <div className="relative flex justify-between items-center w-full md:w-auto">
                 <div className="flex flex-col">
                     <p className="text-md font-semibold whitespace-nowrap">Delivery in 13 minutes</p>
@@ -16,7 +19,7 @@ function Navbar() {
                 </div>
             </div>
             <div className="flex-grow w-full md:w-auto">
-                <input type="text" placeholder="Search" className="w-full border rounded-lg px-4 py-2" />
+                <input type="text" placeholder="Search" className="w-full border rounded-lg px-4 py-2 outline-none" />
             </div>
             <div className="hidden md:block">
                 Login

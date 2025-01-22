@@ -1,16 +1,22 @@
-import freshVegeImg from '@/assets/fresh-vegetables.webp'
-import coldDrinkImg from '@/assets/cold-drinks-and-juices.avif'
-interface CategorySectionItemProps {
-    category: string
+import { Category } from '@/types/category'
+import PropsWithClassName from '@/types/propsWithClassName'
+import { Link } from 'react-router-dom'
+
+interface CategorySectionItemProps extends PropsWithClassName {
+    category: Category
+    highlight?: boolean
 }
-function CategorySectionItem({ category }: CategorySectionItemProps) {
+
+function CategorySectionItem({ category, highlight, className }: CategorySectionItemProps) {
     return (
-        <div className="group text-center relative cursor-pointer">
-            <div className="w-full aspect-square bg-gray-200 rounded-lg overflow-hidden">
-                <img className="transition-transform scale-90 group-hover:scale-100" src={Math.floor(Math.random() * 100) % 2 == 0 ? freshVegeImg : coldDrinkImg} />
+        <Link to={ "/category/" + category.category_id }>
+            <div className={ `relative text-center cursor-pointer text-sm ${highlight && 'bg-green-100'} rounded-lg ${className || ''}`  }>
+                <div className="w-full aspect-square rounded-lg overflow-hidden">
+                    <img className="transition-transform" src={ import.meta.env.VITE_SNAPMART_API_URL + category.category_img_path } />
+                </div>
+                <p className="absolute w-full font-thin text-gray-600 line-clamp-2">{ category.category_name }</p>
             </div>
-            <p className="absolute w-full text-sm font-thin text-gray-600 line-clamp-2">{ category }</p>
-        </div>
+        </Link>
     )
 }
 
