@@ -3,10 +3,13 @@ package main
 import (
 	"context"
 	"log"
+	"time"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 
-	"github.com/jackc/pgx/v5"
+	_ "github.com/jackc/pgx/v5"
+	"github.com/jackc/pgx/v5/pgxpool"
 
 	"github.com/xManan/snapmart/server/internal/db/sqlc"
 	"github.com/xManan/snapmart/server/internal/routes"
@@ -16,17 +19,33 @@ import (
 func main() {
     ctx := context.Background()
 
-	conn, err := pgx.Connect(ctx, "postgres://manan:asdf@localhost:5432/testdb?sslmode=disable")
+    config := &types.Config {
+        AppURL: "http://localhost:8080",
+        PublicStoragePath: "/home/manan/personal/projects/snapmart/server/internal/storage/public",
+        PGConnString: "postgres://manan:asdf@localhost:5432/snapmart?sslmode=disable",
+    }
+
+	pool, err := pgxpool.New(ctx, config.PGConnString)
 	if err != nil {
         log.Fatal(err)
 	}
-	defer conn.Close(ctx)
+	defer pool.Close()
 
-    queries := sqlc.New(conn)
+    queries := sqlc.New(pool)
     
 	router := gin.Default()
 
+    router.Use(cors.New(cors.Config{
+        AllowOrigins:     []string{"*"},
+        AllowMethods:     []string{"*"},
+        AllowHeaders:     []string{"Origin"},
+        ExposeHeaders:    []string{"Content-Length"},
+        AllowCredentials: true,
+        MaxAge: 12 * time.Hour,
+    }))
+
     app := &types.App {
+        Config: config,
         DBQueries: queries,
         Router: router,
     }

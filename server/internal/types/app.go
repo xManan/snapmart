@@ -6,7 +6,7 @@ import (
 )
 
 type App struct {
-	Config    struct{}
+	Config    *Config
 	Router    *gin.Engine
 	DBQueries *sqlc.Queries
 }
