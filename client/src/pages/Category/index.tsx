@@ -4,6 +4,7 @@ import ProductCard from "@/components/ProductCard"
 import { Category as CategoryType } from "@/types/category"
 import { useState, useEffect } from "react"
 import { useParams } from "react-router-dom"
+// import Img from '@/assets/06c34608d011bded237d94a96ecdf5d7'
 
 function Category() {
     const { categoryId } = useParams()
@@ -29,9 +30,12 @@ function Category() {
     return (
         <div className="flex flex-col gap-2">
             <div className="flex gap-4 overflow-x-scroll overflow-y-hidden pb-10 mb-2">
-                {subCategories.map((subCategory, idx) => (
-                    <CategorySectionItem category={subCategory} highlight={selectedIdx == idx} className="min-w-16 text-xs" />
-                ))}
+                {subCategories.map((subCategory, idx) => {
+                    subCategory.category_img_path = '/public/imgs/exotic-fruits'
+                    return (
+                        <CategorySectionItem category={subCategory} highlight={selectedIdx == idx} className="min-w-16 md:min-w-20 text-xs" />
+                    )})
+                }
             </div>
             <div className="grid gap-4 grid-cols-[repeat(auto-fill,_minmax(10rem,_1fr))] md:grid-cols-[repeat(auto-fill,_minmax(12rem,_1fr))]">
                 <LoadingWrapper {...{ loading }}>

@@ -37,7 +37,7 @@ func (ctrl *IndexController) Index(c *gin.Context) {
 		return
 	}
 
-	res := map[string]any{
+	res := gin.H{
 		"categories":                     categories,
 		"featured":                       []any{},
 		"featuredCategoriesWithProducts": categoriesWithProducts,

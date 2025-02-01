@@ -24,3 +24,14 @@ JOIN product_units pu ON p.product_id = pu.product_id
 WHERE 
     category_is_featured
 ORDER BY category_featured_seq ASC, product_unit_id ASC;
+
+-- name: GetSubcategories :many
+SELECT 
+    category_id, category_name, category_img_path
+FROM 
+    categories 
+WHERE 
+    category_parent_id = $1;
+
+
+

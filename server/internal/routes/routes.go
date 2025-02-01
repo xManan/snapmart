@@ -11,6 +11,7 @@ func Init(app *types.App) {
 
     indexController := controllers.NewIndexController(app)
     categoryController := controllers.NewCategoryController(app)
+    productController := controllers.NewProductController(app)
     
     api := r.Group("/api")
     {
@@ -20,6 +21,7 @@ func Init(app *types.App) {
             v1.GET("/index", indexController.Index)
 
             v1.GET("/category/:categoryId", categoryController.GetCategoryById)
+            v1.GET("/category/:categoryId/:subcategoryId", productController.GetProductsByCategory)
         }
     }
 }
