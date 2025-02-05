@@ -22,7 +22,7 @@ func main() {
     config := &types.Config {
         AppURL: "http://localhost:8080",
         PublicStoragePath: "/home/manan/personal/projects/snapmart/server/internal/storage/public",
-        PGConnString: "postgres://manan:asdf@localhost:5432/snapmart?sslmode=disable",
+        PGConnString: "postgres://postgres:asdf@localhost:5432/snapmart?sslmode=disable",
     }
 
 	pool, err := pgxpool.New(ctx, config.PGConnString)

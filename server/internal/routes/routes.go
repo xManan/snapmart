@@ -10,8 +10,8 @@ func Init(app *types.App) {
     r.Static("/public", app.Config.PublicStoragePath)
 
     indexController := controllers.NewIndexController(app)
-    categoryController := controllers.NewCategoryController(app)
     productController := controllers.NewProductController(app)
+    authController := controllers.NewAuthController(app)
     
     api := r.Group("/api")
     {
@@ -19,9 +19,10 @@ func Init(app *types.App) {
         {
             v1.GET("/test", indexController.TestApi)
             v1.GET("/index", indexController.Index)
+            v1.GET("/login", authController.Login)
 
-            v1.GET("/category/:categoryId", categoryController.GetCategoryById)
-            v1.GET("/category/:categoryId/:subcategoryId", productController.GetProductsByCategory)
+            v1.GET("/category/:categoryId/products", productController.GetProductsByCategory)
+            v1.GET("/category/:categoryId/:subcategoryId/products", productController.GetProductsByCategory)
         }
     }
 }

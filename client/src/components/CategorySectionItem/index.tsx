@@ -9,7 +9,7 @@ interface CategorySectionItemProps extends PropsWithClassName {
 
 function CategorySectionItem({ category, highlight, className }: CategorySectionItemProps) {
     return (
-        <Link to={ "/category/" + category.category_id }>
+        <Link to={ category.category_parent_id ? "/category/" + category.category_parent_id + "/" + category.category_id : "/category/" + category.category_id }>
             <div className={ `relative text-center cursor-pointer text-sm ${highlight && 'bg-green-200'} rounded-lg ${className || ''}`  }>
                 <div className="w-full aspect-square rounded-lg overflow-hidden">
                     <img className="transition-transform" src={ import.meta.env.VITE_SNAPMART_API_URL + category.category_img_path } />

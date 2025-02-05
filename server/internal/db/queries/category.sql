@@ -27,11 +27,8 @@ ORDER BY category_featured_seq ASC, product_unit_id ASC;
 
 -- name: GetSubcategories :many
 SELECT 
-    category_id, category_name, category_img_path
+    category_id, category_parent_id, category_name, category_img_path
 FROM 
     categories 
 WHERE 
     category_parent_id = $1;
-
-
-

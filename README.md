@@ -1,4 +1,5 @@
 server:
+docker run --name postgres-container -e POSTGRES_PASSWORD=asdf -p 5432:5432 -d postgres
 export POSTGRES_URL='postgres://manan:asdf@localhost:5432/snapmart?sslmode=disable'
 
 migrate create -ext sql -dir ./internal/db/migrations -seq create_table
