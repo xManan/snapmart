@@ -3,8 +3,27 @@ import Home from '@/pages/Home'
 import CategoryPage from '@/pages/Category'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import '@/App.css'
+import { useEffect } from 'react';
+import useStore from '@/store/global'
 
 function App() {
+    const setUserLoggedIn = useStore(state => state.setUserLoggedIn)
+    useEffect(() => {
+        (async () => {
+            try {
+                const res = await fetch(import.meta.env.VITE_SNAPMART_API_URL + "/api/v1/verify-token", {
+                    method: 'POST',
+                    credentials: "include",
+                })
+                const data = await res.json()
+                if (data.success) {
+                    setUserLoggedIn(true)
+                }
+            } catch (error) {
+                console.error(error)
+            }
+        })();
+    }, [])
     return (
         <Router>
             <Navbar />

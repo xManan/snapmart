@@ -2,28 +2,15 @@ import Logo from '@/components/Logo'
 import { Link } from 'react-router-dom'
 import OverlayContainer from '@/components/OverlayContainer'
 import Login from '@/components/Login'
+import Signup from '@/components/Signup'
 import VerifyOtp from '@/components/VerifyOtp'
 import { LoginState } from '@/enums'
-import { useState } from 'react'
+import useStore from '@/store/global'
 
 function Navbar() {
-    const [waitingForOtp, setWaitingForOtp] = useState<boolean>(false)
-    const [loginState, setLoginState] = useState<LoginState>(LoginState.HIDDEN)
-    const handleLogin = async () => {
-        try {
-            setWaitingForOtp(true)
-            const res = await fetch(import.meta.env.VITE_SNAPMART_API_URL + '/api/v1/login')
-            const data = await res.json()
-            console.log(data)
-        } catch (error) {
-            console.error(error)
-        } finally {
-            setLoginState(LoginState.VERIFY_OTP)
-            setWaitingForOtp(false)
-        }
-    }
-    const handleVerifyOtp = async () => {
-    }
+    const userLoggedIn = useStore(state => state.userLoggedIn)
+    const loginState = useStore(state => state.loginState)
+    const setLoginState = useStore(state => state.setLoginState)
     return (
         <div className="sticky top-0 w-full bg-white flex flex-col md:flex-row gap-4 md:gap-8 justify-between items-center p-4 border-b z-10">
             <Link to="/">
@@ -36,15 +23,15 @@ function Navbar() {
                     <p className="text-md font-semibold whitespace-nowrap">Delivery in 13 minutes</p>
                     <p className="text-sm whitespace-nowrap">Sonipat, Haryana, India</p>
                 </div>
-                <div onClick={() => setLoginState(LoginState.LOGIN)} className="md:hidden cursor-pointer">
-                    Login
+                <div className="md:hidden cursor-pointer">
+                    { userLoggedIn ? <span className='flex'>Account <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000"><path d="M480-360 280-560h400L480-360Z"/></svg></span> : <span onClick={() => setLoginState(LoginState.LOGIN)}>Login</span> }
                 </div>
             </div>
             <div className="flex-grow w-full md:w-auto">
                 <input type="text" placeholder="Search" className="w-full border rounded-lg px-4 py-2 outline-none" />
             </div>
-            <div onClick={() => setLoginState(LoginState.LOGIN)} className="hidden md:block cursor-pointer">
-                Login
+            <div className="hidden md:block cursor-pointer">
+                { userLoggedIn ? <span className='flex'>Account <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000"><path d="M480-360 280-560h400L480-360Z"/></svg></span> : <span onClick={() => setLoginState(LoginState.LOGIN)}>Login</span> }
             </div>
             <OverlayContainer show={loginState !== LoginState.HIDDEN}>
                 <div onClick={() => setLoginState(LoginState.HIDDEN)} className="w-full h-full bg-black bg-opacity-50"></div>
@@ -52,11 +39,11 @@ function Navbar() {
                     {(() => {
                         switch(loginState) {
                             case LoginState.LOGIN:
-                                return <Login handleLogin={handleLogin} waitingForOtp={waitingForOtp} />
+                                return <Login />
                             case LoginState.VERIFY_OTP:
-                                return <VerifyOtp handleVerifyOtp={handleVerifyOtp} setLoginState={setLoginState} />
+                                return <VerifyOtp />
                             case LoginState.SIGNUP:
-                                return <div>Sign Up</div>
+                                return <Signup />
                             default:
                                 return <div>Error</div>
                         }

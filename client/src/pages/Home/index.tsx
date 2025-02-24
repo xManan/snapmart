@@ -16,7 +16,7 @@ function Home() {
                 const res = await fetch(import.meta.env.VITE_SNAPMART_API_URL + "/api/v1/index")
                 const data = await res.json()
                 setCategories(data.data.categories)
-                setFeaturedCategoriesWithProducts(data.data.featuredCategoriesWithProducts)
+                setFeaturedCategoriesWithProducts(data.data.featured_categories_with_products)
             } catch (error) {
                 console.error(error)
             } finally {

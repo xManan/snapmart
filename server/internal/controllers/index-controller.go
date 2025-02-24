@@ -36,11 +36,13 @@ func (ctrl *IndexController) Index(c *gin.Context) {
 		utils.ErrorResponse(c, utils.NewError(100, err.Error()), nil)
 		return
 	}
+    token, _ := c.Cookie("jwt")
+    _, err = utils.GetMobileFromToken(token, ctrl.App.Config.JWTSecret)
 
 	res := gin.H{
-		"categories":                     categories,
-		"featured":                       []any{},
-		"featuredCategoriesWithProducts": categoriesWithProducts,
+		"categories":                        categories,
+		"featured":                          []any{},
+		"featured_categories_with_products": categoriesWithProducts,
 	}
 
 	utils.SuccessResponse(c, "", res)
