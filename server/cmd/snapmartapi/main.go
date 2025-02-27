@@ -3,6 +3,8 @@ package main
 import (
 	"context"
 	"log"
+	"os"
+	"strconv"
 	"time"
 
 	"github.com/gin-contrib/cors"
@@ -15,18 +17,33 @@ import (
 	"github.com/xManan/snapmart/server/internal/routes"
 	"github.com/xManan/snapmart/server/internal/types"
 
-    "github.com/redis/go-redis/v9"
+	"github.com/joho/godotenv"
+	"github.com/redis/go-redis/v9"
 )
 
 func main() {
     ctx := context.Background()
 
+    err := godotenv.Load(".env")
+    if err != nil { 
+        log.Fatalf("unable to load .env: %v\n", err)
+    }
+
+    port := os.Getenv("SNAPMART_API_PORT")
+    portInt, err := strconv.Atoi(port)
+    if err != nil {
+        log.Fatalf("unable to parse port: %v\n", err)
+    }
     config := &types.Config {
-        AppURL: "http://localhost:8080",
-        PublicStoragePath: "/home/manan/personal/projects/snapmart/server/internal/storage/public",
-        PGConnString: "postgres://postgres:asdf@localhost:5432/snapmart?sslmode=disable",
-        RedisConnString: "redis://localhost:6379/0?protocol=3",
-        JWTSecret: "secret",
+        AppURL: os.Getenv("SNAPMART_API_APP_URL"),
+        ClientURL: os.Getenv("SNAPMART_API_CLIENT_URL"),
+        PublicStoragePath: os.Getenv("SNAPMART_API_PUBLIC_STORAGE_PATH"),
+        PGConnString: os.Getenv("SNAPMART_API_PG_CONN_STRING"),
+        RedisConnString: os.Getenv("SNAPMART_API_REDIS_CONN_STRING"),
+        JWTSecret: os.Getenv("SNAPMART_API_JWT_SECRET"),
+        Host: os.Getenv("SNAPMART_API_HOST"),
+        Port: portInt,
+        BaseURL: os.Getenv("SNAPMART_API_BASE_URL"),
     }
 
 	pool, err := pgxpool.New(ctx, config.PGConnString)
@@ -55,7 +72,7 @@ func main() {
 	router := gin.Default()
 
     router.Use(cors.New(cors.Config{
-        AllowOrigins:     []string{"http://localhost:5173"},
+        AllowOrigins:     []string{config.ClientURL},
         AllowMethods:     []string{"GET,HEAD,OPTIONS,POST,PUT"},
         AllowHeaders:     []string{"Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers"},
         ExposeHeaders:    []string{"Content-Length"},
@@ -72,5 +89,5 @@ func main() {
 
     routes.Init(app)
 
-	app.Router.Run() // listen and serve on 0.0.0.0:8080
+    app.Router.Run(config.Host + ":" + strconv.Itoa(config.Port))
 }

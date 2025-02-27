@@ -1,2 +1,4 @@
 tmp/
 internal/db/sqlc/
+.env
+bin/
