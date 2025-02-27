@@ -25,7 +25,7 @@ function App() {
         })();
     }, [])
     return (
-        <Router>
+        <Router basename='/snapmart'>
             <Navbar />
             <div className="max-w-6xl mx-auto pt-6 px-4">
                 <Routes>
