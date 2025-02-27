@@ -6,11 +6,14 @@ import Signup from '@/components/Signup'
 import VerifyOtp from '@/components/VerifyOtp'
 import { LoginState } from '@/enums'
 import useStore from '@/store/global'
+import useCartStore from '@/store/cart'
 
 function Navbar() {
     const userLoggedIn = useStore(state => state.userLoggedIn)
     const loginState = useStore(state => state.loginState)
     const setLoginState = useStore(state => state.setLoginState)
+    const cartItems = useCartStore(state => state.items)
+    const getTotalItems = useCartStore(state => state.getTotalItems)
     return (
         <div className="sticky top-0 w-full bg-white flex flex-col md:flex-row gap-4 md:gap-8 justify-between items-center p-4 border-b z-10">
             <Link to="/">
@@ -51,7 +54,7 @@ function Navbar() {
                 </div>
             </OverlayContainer>
             <button className="bg-sm-green text-white rounded py-2 px-4 hidden md:block">
-                Cart
+                { cartItems.length > 0 ? getTotalItems() + ' items' : 'Cart' }
             </button>
             <div className="md:hidden fixed left-1/2 bottom-0 w-[95%] px-4 py-2 rounded-xl shadow-lg -translate-y-4 -translate-x-1/2 bg-sm-green text-white">
                 View Cart
