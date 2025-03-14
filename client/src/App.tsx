@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import '@/App.css'
 import { useEffect } from 'react';
 import useStore from '@/store/global'
+import { logoutService } from '@/lib/services'
 
 function App() {
     const setUserLoggedIn = useStore(state => state.setUserLoggedIn)

@@ -41,7 +41,13 @@ func (ctrl *IndexController) Index(c *gin.Context) {
 
 	res := gin.H{
 		"categories":                        categories,
-		"featured":                          []any{},
+		"featured":                          []string{
+            ctrl.App.Config.StaticURL + "/public/imgs/featured/1a6296e4-4e39-4279-9e13-12c6dc93a52b.webp",
+            ctrl.App.Config.StaticURL + "/public/imgs/featured/da51a2a4-4efd-4924-b86e-4215e0d3a741.webp",
+            ctrl.App.Config.StaticURL + "/public/imgs/featured/fe3f1771-1ff0-4b48-aed5-0c9babfaf162.webp",
+            ctrl.App.Config.StaticURL + "/public/imgs/featured/3bc5e59d-470a-4ade-a88f-8fd00d6615dc.webp",
+            ctrl.App.Config.StaticURL + "/public/imgs/featured/ec96dba9-cca1-4861-8f10-e7d6e6e19435.webp",
+        },
 		"featured_categories_with_products": categoriesWithProducts,
 	}
 

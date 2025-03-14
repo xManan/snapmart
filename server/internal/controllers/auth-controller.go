@@ -155,7 +155,7 @@ func (ctrl *AuthController) Signup(c *gin.Context) {
         utils.ErrorResponse(c, utils.NewError(104, "Unkown Error"), nil)
         return
     }
-    c.SetCookie("jwt", token, int(24*time.Hour.Seconds()), "/", "", false, true)
+    c.SetCookie("jwt", token, int(1*time.Minute.Seconds()), "/", "", false, true)
     utils.SuccessResponse(c, "Signed up successfully", nil)
     return
 }
@@ -172,4 +172,9 @@ func (ctrl *AuthController) VerifyToken(c *gin.Context) {
         return
     }
     utils.SuccessResponse(c, "Authorized", nil)
+}
+
+func (ctrl *AuthController) Logout(c *gin.Context) {
+    c.SetCookie("jwt", "", -1, "/", "", false, true)
+    utils.SuccessResponse(c, "Logged out successfully", nil)
 }

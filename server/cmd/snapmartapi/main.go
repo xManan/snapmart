@@ -44,6 +44,7 @@ func main() {
         Host: os.Getenv("SNAPMART_API_HOST"),
         Port: portInt,
         BaseURL: os.Getenv("SNAPMART_API_BASE_URL"),
+        StaticURL: os.Getenv("SNAPMART_API_STATIC_URL"),
     }
 
 	pool, err := pgxpool.New(ctx, config.PGConnString)

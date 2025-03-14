@@ -33,27 +33,27 @@ INSERT INTO categories (category_name, category_img_path, category_parent_id, ca
 ('Mushrooms', '/public/imgs/categories/mushrooms', 1, false, NULL),
 -- 14
 ('Herbs', '/public/imgs/categories/herbs', 1, false, NULL);
-INSERT INTO products (product_name) VALUES 
+INSERT INTO products (product_name, product_img_path) VALUES 
 -- 1
-('Potatoes'),
+('Potatoes', '/public/imgs/products/potatoes.jpg'),
 -- 2
-('Beans'),
+('Beans', '/public/imgs/products/beans.jpg'),
 -- 3
-('Peas'),
+('Peas', '/public/imgs/products/peas.jpg'),
 -- 4
-('Raddish'),
+('Radish', '/public/imgs/products/radish.jpg'),
 -- 5
-('Onions'),
+('Onions', '/public/imgs/products/onions.jpg'),
 -- 6
-('Ladyfinger'),
+('Ladyfinger', '/public/imgs/products/ladyfinger.jpg'),
 -- 7
-('Carrots'),
+('Carrots', '/public/imgs/products/carrots.jpg'),
 -- 8
-('Cauliflower'),
+('Cauliflower', '/public/imgs/products/cauliflower.jpg'),
 -- 9
-('Spinach'),
+('Spinach', '/public/imgs/products/spinach.jpg'),
 -- 10
-('Fenugreek');
+('Fenugreek', '/public/imgs/products/fenugreek.jpg');
 INSERT INTO product_category (category_id, product_id) VALUES
 (1, 1), (1, 2), (1, 3), (1, 4), (1, 5), (1, 6), (1, 7), (1, 8), (1, 9), (1, 10),
 (2, 1), (2, 2), (2, 3), (2, 4), (2, 5), (2, 6), (2, 7), (2, 8), (2, 9), (2, 10),

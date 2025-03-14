@@ -7,6 +7,7 @@ import { useState, useEffect } from 'react'
 
 function Home() {
     const [categories, setCategories] = useState<Category[]>([])
+    const [featured, setFeatured] = useState<string[]>([])
     const [featuredCategoriesWithProducts, setFeaturedCategoriesWithProducts] = useState<CategoryWithProducts[]>([])
     const [loading, setLoading] = useState<boolean>(true)
     useEffect(() => {
@@ -16,6 +17,7 @@ function Home() {
                 const res = await fetch(import.meta.env.VITE_SNAPMART_API_URL + "/api/v1/index")
                 const data = await res.json()
                 setCategories(data.data.categories)
+                setFeatured(data.data.featured)
                 setFeaturedCategoriesWithProducts(data.data.featured_categories_with_products)
             } catch (error) {
                 console.error(error)
@@ -27,7 +29,7 @@ function Home() {
     return (
         <LoadingWrapper {...{ loading }}>
             <CategorySection {...{ categories }} />
-            <FeaturedSection />
+            <FeaturedSection {...{ featured }} />
             {featuredCategoriesWithProducts.map(category => (
                 <ProductSlider key={'product-slider-' + category.category_id} categoryWithProducts={category} />
             ))}

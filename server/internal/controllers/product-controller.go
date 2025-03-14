@@ -5,6 +5,8 @@ import (
 	"strconv"
 
 	"github.com/gin-gonic/gin"
+	"github.com/jackc/pgx/v5/pgtype"
+	"github.com/xManan/snapmart/server/internal/db/sqlc"
 	"github.com/xManan/snapmart/server/internal/types"
 	"github.com/xManan/snapmart/server/pkg/utils"
 )
@@ -60,7 +62,37 @@ func (ctrl *ProductController) GetProductsByCategory(c *gin.Context) {
             return
         }
     }
-    products, err := q.GetProductsByCategory(ctx, subcategoryId);
+    data, err := q.GetProductsByCategory(ctx, subcategoryId);
+	productMap := make(map[int64]*types.Product)
+    products := []*types.Product{}
+	for _, row := range data {
+		var productPtr *types.Product
+		var productFound bool
+		if productPtr, productFound = productMap[row.ProductID]; !productFound {
+			productPtr = &types.Product{
+				Product: sqlc.Product{
+					ProductID:   row.ProductID,
+					ProductName: row.ProductName,
+				},
+			}
+            if row.ProductImgPath.Valid {
+                productPtr.Product.ProductImgPath = pgtype.Text{ 
+                    String: ctrl.App.Config.StaticURL + row.ProductImgPath.String,
+                    Valid: true,
+                }
+            }
+			productMap[row.ProductID] = productPtr
+		}
+		productPtr.ProductUnits = append(productPtr.ProductUnits, sqlc.ProductUnit{
+			ProductUnitID: row.ProductUnitID,
+			Quantity:      row.Quantity,
+			Unit:          row.Unit,
+			Price:         row.Price,
+		})
+        if !productFound {
+            products = append(products, productPtr)
+        }
+    }
 	if err != nil {
 		utils.ErrorResponse(c, utils.NewError(100, err.Error()), nil)
 		return

@@ -14,6 +14,7 @@ function ProductCard({ product }: ProductCardProps) {
     const cartItems = useCartStore(state => state.items)
     const addItem = useCartStore(state => state.addItem)
     const removeItem = useCartStore(state => state.removeItem)
+    const [ imgSrc, setImgSrc ] = useState<string>(product.product_img_path)
     const handleAddToCart = () => {
         addItem({
             product_id: product.product_id,
@@ -32,7 +33,7 @@ function ProductCard({ product }: ProductCardProps) {
     return (
         <div className="flex flex-col min-w-40 min-h-60 md:min-w-48 md:min-h-72 p-4 rounded-lg shadow-lg border">
             <div className="flex justify-center mb-1">
-                <img src="https://placehold.co/200x200" />
+                <img src={ product.product_img_path ?? "https://placehold.co/200x200" } />
             </div>
             <p className="font-bold line-clamp-2">{product.product_name}</p>
             <div className="mt-auto">

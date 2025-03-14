@@ -10,4 +10,5 @@ type Config struct {
     Host string
     Port int
     BaseURL string
+    StaticURL string
 }

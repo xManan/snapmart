@@ -3,6 +3,7 @@ package services
 import (
 	"context"
 
+	"github.com/jackc/pgx/v5/pgtype"
 	"github.com/xManan/snapmart/server/internal/db/sqlc"
 	"github.com/xManan/snapmart/server/internal/types"
 )
@@ -34,6 +35,12 @@ func (cs *CategoryService) GetFeaturedCategoriesWithProducts(ctx context.Context
 					ProductName: row.ProductName,
 				},
 			}
+            if row.ProductImgPath.Valid {
+                productPtr.Product.ProductImgPath = pgtype.Text{ 
+                    String: cs.App.Config.StaticURL + row.ProductImgPath.String,
+                    Valid: true,
+                }
+            }
 			productMap[row.ProductID] = productPtr
 		}
 		productPtr.ProductUnits = append(productPtr.ProductUnits, sqlc.ProductUnit{

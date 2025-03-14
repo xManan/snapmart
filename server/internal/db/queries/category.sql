@@ -12,6 +12,7 @@ SELECT
     category_name, 
     p.product_id, 
     product_name,
+    product_img_path,
     product_unit_id, 
     quantity, 
     unit, 

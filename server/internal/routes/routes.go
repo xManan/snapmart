@@ -24,6 +24,7 @@ func Init(app *types.App) {
 				v1.POST("/verify-otp", authController.VerifyOtp)
 				v1.POST("/signup", authController.Signup)
 				v1.POST("/verify-token", authController.VerifyToken)
+				v1.POST("/logout", authController.Logout)
 
 				v1.GET("/category/:categoryId/products", productController.GetProductsByCategory)
 				v1.GET("/category/:categoryId/:subcategoryId/products", productController.GetProductsByCategory)
